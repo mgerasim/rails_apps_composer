@@ -6,8 +6,10 @@ after_bundler do
   ### LAYOUTS ###
   copy_from_repo 'app/views/layouts/application.html.erb'
   copy_from_repo 'app/views/layouts/application-bootstrap.html.erb', :prefs => 'bootstrap'
+  copy_from_repo 'app/views/layouts/application-bootstrap.html.erb', :prefs => 'bootstrap3'
   copy_from_repo 'app/views/layouts/_messages.html.erb'
   copy_from_repo 'app/views/layouts/_messages-bootstrap.html.erb', :prefs => 'bootstrap'
+  copy_from_repo 'app/views/layouts/application-bootstrap.html.erb', :prefs => 'bootstrap3'
   copy_from_repo 'app/views/layouts/_navigation.html.erb'
   if prefer :authorization, 'cancan'
     case prefs[:authentication]
@@ -29,9 +31,17 @@ after_bundler do
   ### CSS ###
   copy_from_repo 'app/assets/stylesheets/application.css.scss'
   copy_from_repo 'app/assets/stylesheets/application-bootstrap.css.scss', :prefs => 'bootstrap'
+  copy_from_repo 'app/assets/stylesheets/application-bootstrap.css.scss', :prefs => 'bootstrap3'
   if prefer :bootstrap, 'less'
     generate 'bootstrap:install'
     insert_into_file 'app/assets/stylesheets/bootstrap_and_overrides.css.less', "body { padding-top: 60px; }\n", :after => "@import \"twitter/bootstrap/bootstrap\";\n"
+  elsif prefer :bootstrap3, 'sass'
+    insert_into_file 'app/assets/javascripts/application.js', "//= require bootstrap\n", :after => "jquery_ujs\n"
+    create_file 'app/assets/stylesheets/bootstrap_and_overrides.css.scss', <<-RUBY
+@import "bootstrap";
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
+RUBY
   elsif prefer :bootstrap, 'sass'
     insert_into_file 'app/assets/javascripts/application.js', "//= require bootstrap\n", :after => "jquery_ujs\n"
     create_file 'app/assets/stylesheets/bootstrap_and_overrides.css.scss', <<-RUBY

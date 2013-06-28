@@ -60,7 +60,7 @@ end
 
 ## Front-end Framework
 if recipes.include? 'frontend'
-  prefs[:frontend] = multiple_choice "Front-end framework?", [["None", "none"], ["Twitter Bootstrap", "bootstrap"],
+  prefs[:frontend] = multiple_choice "Front-end framework?", [["None", "none"], ["Twitter Bootstrap", "bootstrap"], ["Twitter Bootstrap3", "bootstrap3"],
     ["Zurb Foundation", "foundation"], ["Skeleton", "skeleton"], ["Just normalize CSS for consistent styling", "normalize"]] unless prefs.has_key? :frontend
   if prefer :frontend, 'bootstrap'
     case HOST_OS
@@ -69,6 +69,15 @@ if recipes.include? 'frontend'
       else
         prefs[:bootstrap] = multiple_choice "Twitter Bootstrap version?", [["Twitter Bootstrap (Less)", "less"],
           ["Twitter Bootstrap (Sass)", "sass"]] unless prefs.has_key? :bootstrap
+    end
+  end
+  if prefer :frontend, 'bootstrap3'
+    case HOST_OS
+      when /mswin|windows/i
+        prefs[:bootstrap3] = multiple_choice "Twitter Bootstrap version?", [["Twitter Bootstrap (Sass)", "sass"]] unless prefs.has_key? :bootstrap3
+      else
+        prefs[:bootstrap3] = multiple_choice "Twitter Bootstrap version?", [["Twitter Bootstrap (Less)", "less"],
+                                                                           ["Twitter Bootstrap (Sass)", "sass"]] unless prefs.has_key? :bootstrap3
     end
   end
 end

@@ -81,22 +81,23 @@ add_gem 'machinist', :group => :test if prefer :fixtures, 'machinist'
 
 ## Front-end Framework
 add_gem 'bootstrap-sass' if prefer :bootstrap, 'sass'
-add_gem 'compass-rails', :group => :assets if prefer :frontend, 'foundation'
-add_gem 'zurb-foundation', :group => :assets if prefer :frontend, 'foundation'
+add_gem 'bootstrap-sass', :git => 'git@github.com:thomas-mcdonald/bootstrap-sass.git', :branch => '3' if prefer :bootstrap3, 'sass'
+add_gem 'compass-rails', :git => 'git://github.com/milgner/compass-rails.git', :ref => '1749c06f15dc4b058427e7969810457213647fb8' if prefer :frontend, 'foundation'
+add_gem 'zurb-foundation' if prefer :frontend, 'foundation'
 if prefer :bootstrap, 'less'
-  add_gem 'less-rails', :group => :assets
-  add_gem 'twitter-bootstrap-rails', :group => :assets
+  add_gem 'less-rails'
+  add_gem 'twitter-bootstrap-rails'
   # install gem 'therubyracer' to use Less
   add_gem 'libv8'
-  add_gem 'therubyracer', :group => :assets, :platform => :ruby, :require => 'v8'
+  add_gem 'therubyracer', :platform => :ruby, :require => 'v8'
 end
 
 ## Email
 add_gem 'sendgrid' if prefer :email, 'sendgrid'
 
 ## Authentication (Devise)
-add_gem 'devise' if prefer :authentication, 'devise'
-add_gem 'devise_invitable' if prefer :devise_modules, 'invitable'
+add_gem 'devise', '~> 3.0.0.rc' if prefer :authentication, 'devise'
+add_gem 'devise_invitable', :git => 'git://github.com/scambra/devise_invitable.git', :branch => 'rails4' if prefer :devise_modules, 'invitable'
 
 ## Authentication (OmniAuth)
 add_gem 'omniauth' if prefer :authentication, 'omniauth'
@@ -212,6 +213,9 @@ after_bundler do
     if prefer :frontend, 'bootstrap'
       say_wizard "recipe installing simple_form for use with Twitter Bootstrap"
       generate 'simple_form:install --bootstrap'
+    elsif prefer :frontend, 'bootstrap3'
+        say_wizard "recipe installing simple_form for use with Twitter Bootstrap"
+        generate 'simple_form:install --bootstrap'
     else
       say_wizard "recipe installing simple_form"
       generate 'simple_form:install'

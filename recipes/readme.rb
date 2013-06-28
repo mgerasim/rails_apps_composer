@@ -48,6 +48,7 @@ after_everything do
 
   # Front-end Framework
   gsub_file "README.textile", /Front-end Framework: None/, "Front-end Framework: Twitter Bootstrap (Sass)" if prefer :bootstrap, 'sass'
+  gsub_file "README.textile", /Front-end Framework: None/, "Front-end Framework: Twitter Bootstrap3 (Sass)" if prefer :bootstrap3, 'sass'
   gsub_file "README.textile", /Front-end Framework: None/, "Front-end Framework: Twitter Bootstrap (Less)" if prefer :bootstrap, 'less'
   gsub_file "README.textile", /Front-end Framework: None/, "Front-end Framework: Zurb Foundation" if prefer :frontend, 'foundation'
   gsub_file "README.textile", /Front-end Framework: None/, "Front-end Framework: Skeleton" if prefer :frontend, 'skeleton'
